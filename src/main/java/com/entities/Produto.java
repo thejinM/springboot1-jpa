@@ -11,8 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "TB_Categoria")
-public class Categoria implements Serializable
+@Table(name = "TB_Produto")
+public class Produto implements Serializable
 {
   private static final long serialVersionUID = 1L;
 
@@ -20,15 +20,21 @@ public class Categoria implements Serializable
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String nome;
+  private String descricao;
+  private double preco;
+  private String imgURL;
 
-  private Set<Produto> produtos = new HashSet<>();
-  
-  public Categoria () {}
+  private Set<Categoria> categorias = new HashSet<>();
 
-  public Categoria(Long id, String nome) 
+  public Produto () {}
+
+  public Produto(Long id, String nome, String descricao, double preco, String imgURL) 
   {
     this.id = id;
     this.nome = nome;
+    this.descricao = descricao;
+    this.preco = preco;
+    this.imgURL = imgURL;
   }
 
   public Long getId() 
@@ -51,9 +57,39 @@ public class Categoria implements Serializable
     this.nome = nome;
   }
 
-  public Set<Produto> getProdutos() 
+  public String getDescricao() 
   {
-    return produtos;
+    return descricao;
+  }
+
+  public void setDescricao(String descricao) 
+  {
+    this.descricao = descricao;
+  }
+
+  public double getPreco() 
+  {
+    return preco;
+  }
+
+  public void setPreco(double preco) 
+  {
+    this.preco = preco;
+  }
+
+  public String getImgURL() 
+  {
+    return imgURL;
+  }
+
+  public void setImgURL(String imgURL) 
+  {
+    this.imgURL = imgURL;
+  }
+
+  public Set<Categoria> getCategorias() 
+  {
+    return categorias;
   }
 
   @Override
@@ -74,12 +110,12 @@ public class Categoria implements Serializable
       return false;
     if (getClass() != obj.getClass())
       return false;
-    Categoria other = (Categoria) obj;
+    Produto other = (Produto) obj;
     if (id == null) {
       if (other.id != null)
         return false;
     } else if (!id.equals(other.id))
       return false;
     return true;
-  }
+  }  
 }
