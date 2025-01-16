@@ -47,6 +47,18 @@ public class TesteConfig implements CommandLineRunner
     Produto pr4 = new Produto(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
     Produto pr5 = new Produto(null, "Rails para Leigos", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 
+    repositorioCategoria.saveAll(Arrays.asList(cat1, cat2, cat3));
+    repositorioProduto.saveAll(Arrays.asList(pr1, pr2, pr3, pr4, pr5));
+
+    pr1.getCategorias().add(cat2);
+    pr2.getCategorias().add(cat1);
+    pr2.getCategorias().add(cat3);
+    pr3.getCategorias().add(cat3);
+    pr4.getCategorias().add(cat3);
+    pr5.getCategorias().add(cat2);
+
+    repositorioProduto.saveAll(Arrays.asList(pr1, pr2, pr3, pr4, pr5));
+
     Usuario u1 = new Usuario(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
     Usuario u2 = new Usuario(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 
@@ -56,7 +68,5 @@ public class TesteConfig implements CommandLineRunner
 
     repositorioUsuario.saveAll(Arrays.asList(u1, u2));
     repositorioPedido.saveAll(Arrays.asList(p1, p2, p3));
-    repositorioCategoria.saveAll(Arrays.asList(cat1, cat2, cat3));
-    repositorioProduto.saveAll(Arrays.asList(pr1, pr2, pr3, pr4, pr5));
   }
 }
