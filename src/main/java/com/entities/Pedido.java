@@ -12,8 +12,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "TB_Pedido")
 public class Pedido implements Serializable
 {
   private static final long serialVersionUID = 1l;
@@ -25,7 +27,7 @@ public class Pedido implements Serializable
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
   private Instant momento;
 
-  private PedidoStatus pedidoStatus;
+  private Integer pedidoStatus;
   
   @ManyToOne
   @JoinColumn(name = "cliente_id")
@@ -37,7 +39,7 @@ public class Pedido implements Serializable
   {
     this.id = id;
     this.momento = momento;
-    this.pedidoStatus = pedidoStatus;
+    setPedidoStatus(pedidoStatus);
     this.cliente = cliente;
   }
 
@@ -63,12 +65,15 @@ public class Pedido implements Serializable
 
   public PedidoStatus getPedidoStatus() 
   {
-    return pedidoStatus;
+    return PedidoStatus.valueOf(pedidoStatus);
   }
 
   public void setPedidoStatus(PedidoStatus pedidoStatus) 
   {
-    this.pedidoStatus = pedidoStatus;
+    if (pedidoStatus != null)
+    {
+      this.pedidoStatus = pedidoStatus.getCodigo();
+    }
   }
 
   public Usuario getCliente() 
