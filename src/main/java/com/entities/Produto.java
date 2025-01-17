@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,6 +31,9 @@ public class Produto implements Serializable
   @ManyToMany
   @JoinTable(name = "TB_Produto_Categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
   private Set<Categoria> categorias = new HashSet<>();
+
+  @OneToMany(mappedBy = "id.produto")
+  private Set<ItemPedido> itens = new HashSet<>();
 
   public Produto () {}
 
@@ -95,6 +99,16 @@ public class Produto implements Serializable
   public Set<Categoria> getCategorias() 
   {
     return categorias;
+  }
+
+  public Set<Pedido> getPedidos()
+  {
+    Set<Pedido> set = new HashSet<>();
+    for (ItemPedido x : itens)
+    {
+      set.add(x.getPedido());
+    }
+    return set;
   }
 
   @Override

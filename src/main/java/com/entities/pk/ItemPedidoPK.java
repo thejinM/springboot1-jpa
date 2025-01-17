@@ -38,6 +38,7 @@ public class ItemPedidoPK implements Serializable
   {
     this.produto = produto;
   }
+  
   @Override
   public int hashCode() 
   {

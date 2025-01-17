@@ -3,6 +3,7 @@ package com.entities;
 import java.io.Serializable;
 
 import com.entities.pk.ItemPedidoPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -31,6 +32,7 @@ public class ItemPedido implements Serializable
     this.preco = preco;
   }
 
+  @JsonIgnore
   public Pedido getPedido()
   {
     return id.getPedido();
@@ -41,6 +43,7 @@ public class ItemPedido implements Serializable
     id.setPedido(pedido);
   }
 
+  @JsonIgnore
   public Produto getProduto()
   {
     return id.getProduto();
