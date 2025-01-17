@@ -15,6 +15,7 @@ import com.Repositories.RepositorioProduto;
 import com.Repositories.RepositorioUsuario;
 import com.entities.Categoria;
 import com.entities.ItemPedido;
+import com.entities.Pagamento;
 import com.entities.Pedido;
 import com.entities.Produto;
 import com.entities.Usuario;
@@ -80,5 +81,9 @@ public class TesteConfig implements CommandLineRunner
     ItemPedido ip4 = new ItemPedido(p3, pr5, 2, pr5.getPreco());
 
     repositorioItemPedido.saveAll(Arrays.asList(ip1, ip2, ip3, ip4));
+
+    Pagamento pag1 = new Pagamento(null, Instant.parse("2019-06-20T21:53:07Z"), p1);
+    p1.setPagamento(pag1);
+    repositorioPedido.save(p1);
   }
 }
