@@ -13,6 +13,8 @@ import com.Services.exceptions.ExceptionDataBase;
 import com.Services.exceptions.ExceptionRecursoNaoEncontrado;
 import com.entities.Usuario;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ServicoUsuario 
 {
@@ -39,6 +41,10 @@ public class ServicoUsuario
   {
     try 
     {
+      if (!repositorio.existsById(id))
+      {
+        throw new ExceptionRecursoNaoEncontrado(id);
+      }
       repositorio.deleteById(id);
     }
     catch (EmptyResultDataAccessException e)
@@ -53,9 +59,16 @@ public class ServicoUsuario
 
   public Usuario atualizar(Long id, Usuario obj)
   {
-    Usuario entidade = repositorio.getReferenceById(id);
-    atualizarDados(entidade, obj);
-    return repositorio.save(entidade);
+    try 
+    {
+      Usuario entidade = repositorio.getReferenceById(id);
+      atualizarDados(entidade, obj);
+      return repositorio.save(entidade);
+    }
+    catch(EntityNotFoundException e)
+    {
+      throw new ExceptionRecursoNaoEncontrado(id);
+    }
   }
 
   public void atualizarDados(Usuario entidade, Usuario obj)
