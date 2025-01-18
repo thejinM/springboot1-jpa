@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.Services.ServicoUsuario;
 import com.entities.Usuario;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -46,10 +47,17 @@ public class RecursoUsuario
     return ResponseEntity.created(uri).body(obj);
   }
 
-  @DeleteMapping
+  @DeleteMapping(value = "/{id}")
   public ResponseEntity<Void> deletar(@PathVariable Long id)
   {
     servico.deletar(id);
     return ResponseEntity.noContent().build();
+  }
+
+  @PutMapping(value = "/{id}")
+  public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody Usuario obj)
+  {
+    obj = servico.atualizar(id, obj);
+    return ResponseEntity.ok().body(obj);
   }
 }
